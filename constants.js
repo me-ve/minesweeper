@@ -25,7 +25,7 @@ const MISTAKEN = 4;
 //gfx data
 const GRID_X_CENTER = 320;
 const GRID_Y_CENTER = 240;
-const FIELD_HEIGHT = 24;
-const FIELD_WIDTH = 24;
+const FIELD_HEIGHT = 16;
+const FIELD_WIDTH = 16;
 
-const FONT = '24px Helvetica'
+const FONT = '16px Helvetica'

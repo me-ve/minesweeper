@@ -20,14 +20,23 @@ function init() {
     gridOffsetY = GRID_Y_CENTER - (settings.fieldsVertical * FIELD_HEIGHT) / 2;
     gridEndX = GRID_X_CENTER + (settings.fieldsHorizontal * FIELD_WIDTH) / 2;
     gridEndY = GRID_Y_CENTER + (settings.fieldsVertical * FIELD_HEIGHT) / 2;
-    let grid = gen_grid(settings, [0, 0]);
+    gameRunning = false;
+    let grid;
     canvas.onclick = function(e) {
         let x = e.clientX - canvas.offsetLeft;
         let y = e.clientY - canvas.offsetTop;
         if (between(x, gridOffsetX, gridEndX) && between(y, gridOffsetY, gridEndY)) {
             let xIndex = (x - gridOffsetX) / FIELD_WIDTH | 0;
             let yIndex = (y - gridOffsetY) / FIELD_HEIGHT | 0;
-            console.log(grid[yIndex][xIndex]);
+            if (!gameRunning) {
+                grid = gen_grid(settings, [yIndex, xIndex]);
+                gameRunning = true;
+                draw(grid);
+                time = { start: Date.now() };
+                console.log("Game started.");
+            } else {
+                console.log(grid[yIndex][xIndex]);
+            }
         }
     }
     draw(grid);
