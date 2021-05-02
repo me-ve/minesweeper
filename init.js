@@ -6,15 +6,15 @@ function init() {
     mode = "easy";
     settings = config(mode);
     colors = [
-        "#FFFFFF",
-        "#0000FF",
-        "#008000",
-        "#FF0000",
-        "#000080",
-        "#800000",
-        "#008080",
-        "#000000",
-        "#808080"
+        COLOR_ZERO,
+        COLOR_ONE,
+        COLOR_TWO,
+        COLOR_THREE,
+        COLOR_FOUR,
+        COLOR_FIVE,
+        COLOR_SIX,
+        COLOR_SEVEN,
+        COLOR_EIGHT
     ];
     gridOffsetX = GRID_X_CENTER - (settings.fieldsHorizontal * FIELD_WIDTH) / 2;
     gridOffsetY = GRID_Y_CENTER - (settings.fieldsVertical * FIELD_HEIGHT) / 2;
@@ -35,10 +35,10 @@ function init() {
             if (!gameRunning) {
                 grid = gen_grid(settings, [yIndex, xIndex]);
                 safeFieldsLeft = exposeNeighboursIfEmpty(grid, safeFieldsLeft, xIndex, yIndex) - 1;
+                flagsLeft = settings.mines;
                 gameRunning = true;
                 draw(grid);
                 time = { start: Date.now() };
-                console.log("Game started.");
             } else {
                 if (grid[yIndex][xIndex].status != FLAGGED) {
                     if (grid[yIndex][xIndex].isMined) {
@@ -50,7 +50,6 @@ function init() {
                     }
                 }
             }
-            console.log(safeFieldsLeft)
             if (safeFieldsLeft == 0 && !gameEnded) {
                 gameEnded = true;
                 gameWon = true;
@@ -67,10 +66,14 @@ function init() {
             if (gameRunning) {
                 switch (grid[yIndex][xIndex].status) {
                     case HIDDEN:
-                        grid[yIndex][xIndex].status = FLAGGED;
+                        if (flagsLeft) {
+                            grid[yIndex][xIndex].status = FLAGGED;
+                            flagsLeft--;
+                        }
                         break;
                     case FLAGGED:
                         grid[yIndex][xIndex].status = HIDDEN;
+                        flagsLeft++;
                         break;
                 }
             }

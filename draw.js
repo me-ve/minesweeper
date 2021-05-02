@@ -12,6 +12,7 @@ function draw(grid) {
     ctx.fillStyle = "#B0B0B0";
     ctx.fillRect(gridOffsetX, gridOffsetY, gridEndX - gridOffsetX, gridEndY - gridOffsetY);
     ctx.font = FONT;
+    let flags = 0;
     for (let i = 0; i < settings.fieldsVertical; i++) {
         let verStart = gridOffsetY + i * FIELD_HEIGHT;
         for (let j = 0; j < settings.fieldsHorizontal; j++) {
@@ -42,6 +43,7 @@ function draw(grid) {
                         symbol = "⚑";
                         ctx.fillStyle = "#FF0000";
                         ctx.fillText(symbol, horStart + FIELD_WIDTH / 6, verStart + FIELD_HEIGHT - 2);
+                        flags++;
                         break;
                     case DETONATED:
                         ctx.fillStyle = "#FFFFFF";
@@ -70,6 +72,12 @@ function draw(grid) {
         ctx.fillStyle = "#000000";
         ctx.font = "48px Helvetica"
         ctx.fillText(message, 24, 96);
+    } else if (gameRunning) {
+        let flagsLeft = 10 - flags;
+        let message = "Flags: " + flagsLeft;
+        ctx.fillStyle = "#000000";
+        ctx.font = "48px Helvetica"
+        ctx.fillText(message, 24, 96);
     }
     if (typeof time != "undefined") {
         ctx.fillStyle = "#000000";
@@ -78,10 +86,11 @@ function draw(grid) {
             time.now = Date.now();
             let ms = time.now - time.start;
             let timeStr = ms / 1000 | 0;
-            ctx.fillText(timeStr, 24, 48);
+            ctx.fillText("Time: " + timeStr, 24, 48);
         } else {
             let ms = time.now - time.start;
-            ctx.fillText(ms / 1000, 24, 48);
+            let timeStr = ms / 1000 | 0;
+            ctx.fillText("Time: " + timeStr, 24, 48);
         }
     }
     if (typeof grid != "undefined")

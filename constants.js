@@ -29,3 +29,14 @@ const FIELD_HEIGHT = 16;
 const FIELD_WIDTH = 16;
 
 const FONT = '16px Helvetica'
+
+//colors
+const COLOR_ZERO = "#FFFFFF";
+const COLOR_ONE = "#0000FF";
+const COLOR_TWO = "#008000";
+const COLOR_THREE = "#FF0000";
+const COLOR_FOUR = "#000080";
+const COLOR_FIVE = "#800000";
+const COLOR_SIX = "#008080";
+const COLOR_SEVEN = "#000000";
+const COLOR_EIGHT = "#808080";
