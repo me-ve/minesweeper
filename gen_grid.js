@@ -3,7 +3,7 @@ function gen_grid(settings, firstField) {
     for (let i = 0; i < settings.fieldsVertical; i++) {
         grid[i] = new Array(settings.fieldsHorizontal);
         for (let j = 0; j < settings.fieldsHorizontal; j++) {
-            grid[i][j] = new Field(false, 0, EXPOSED);
+            grid[i][j] = new Field(false, 0, (i == firstField[0] && j == firstField[1]) ? EXPOSED : HIDDEN);
         }
     }
     let minesLeft = settings.mines;

@@ -9,7 +9,7 @@ let isWon;
 
 function draw(grid) {
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "#FFFFFF";
+    ctx.fillStyle = "#B0B0B0";
     ctx.fillRect(gridOffsetX, gridOffsetY, gridEndX - gridOffsetX, gridEndY - gridOffsetY);
     ctx.font = FONT;
     for (let i = 0; i < settings.fieldsVertical; i++) {
@@ -20,6 +20,8 @@ function draw(grid) {
             if (gameRunning) {
                 switch (grid[i][j].status) {
                     case EXPOSED:
+                        ctx.fillStyle = "#FFFFFF";
+                        ctx.fillRect(horStart, verStart, FIELD_WIDTH, FIELD_HEIGHT);
                         ctx.fillStyle = grid[i][j].isMined ? "#000000" : colors[grid[i][j].minesNearby];
                         symbol = " ";
                         if (grid[i][j].isMined) {
@@ -31,21 +33,32 @@ function draw(grid) {
                         }
                         break;
                     case HIDDEN:
-                        ctx.fillStyle = "#808080";
+                        ctx.fillStyle = "#B0B0B0";
                         ctx.fillRect(horStart, verStart, FIELD_WIDTH, FIELD_HEIGHT);
                         break;
                     case FLAGGED:
+                        ctx.fillStyle = "#B0B0B0";
+                        ctx.fillRect(horStart, verStart, FIELD_WIDTH, FIELD_HEIGHT);
                         symbol = "⚑";
                         ctx.fillStyle = "#FF0000";
                         ctx.fillText(symbol, horStart + FIELD_WIDTH / 6, verStart + FIELD_HEIGHT - 2);
                         break;
                     case DETONATED:
+                        ctx.fillStyle = "#FFFFFF";
+                        ctx.fillRect(horStart, verStart, FIELD_WIDTH, FIELD_HEIGHT);
                         ctx.fillStyle = "#FF0000";
                         symbol = "☢";
                         ctx.fillText(symbol, horStart + FIELD_WIDTH / 6, verStart + FIELD_HEIGHT - 2);
                         break;
                     case MISTAKEN:
-                        symbol = "⛌";
+                        ctx.fillStyle = "#B0B0B0";
+                        ctx.fillRect(horStart, verStart, FIELD_WIDTH, FIELD_HEIGHT);
+                        ctx.fillStyle = "#FF0000";
+                        symbol = "⚑";
+                        ctx.fillText(symbol, horStart + FIELD_WIDTH / 6, verStart + FIELD_HEIGHT - 2);
+                        ctx.fillStyle = "#000000";
+                        symbol = "⨉";
+                        ctx.fillText(symbol, horStart, verStart + FIELD_HEIGHT - 4);
                         break;
                 }
             }

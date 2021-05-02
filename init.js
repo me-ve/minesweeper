@@ -37,15 +37,29 @@ function init() {
                 time = { start: Date.now() };
                 console.log("Game started.");
             } else {
-                if (grid[yIndex][xIndex].isMined) {
-                    console.log("Mine detected.");
-                    grid[yIndex][xIndex].status = DETONATED;
-                    gameEnded = true;
-                } else {
-                    console.log("Field is clear.");
+                if (grid[yIndex][xIndex].status != FLAGGED) {
+                    if (grid[yIndex][xIndex].isMined) {
+                        grid[yIndex][xIndex].status = DETONATED;
+                        gameEnded = true;
+                        exposeEntireGrid(grid);
+                    } else {
+                        grid[yIndex][xIndex].status = EXPOSED;
+                    }
                 }
             }
         }
+    }
+    canvas.oncontextmenu = function(e) {
+        let x = e.clientX - canvas.offsetLeft;
+        let y = e.clientY - canvas.offsetTop;
+        if (between(x, gridOffsetX, gridEndX) && between(y, gridOffsetY, gridEndY) && !gameEnded) {
+            let xIndex = (x - gridOffsetX) / FIELD_WIDTH | 0;
+            let yIndex = (y - gridOffsetY) / FIELD_HEIGHT | 0;
+            if (gameRunning) {
+                grid[yIndex][xIndex].status ^= FLAGGED; //switches between hidden(0) and flagged(1)
+            }
+        }
+        return false;
     }
     draw(grid);
 }

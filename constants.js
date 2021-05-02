@@ -16,9 +16,9 @@ const FIELDS_HORIZONTAL_HARD = 30;
 const MINES_HARD = 99;
 
 //status types
-const EXPOSED = 0;
-const HIDDEN = 1;
-const FLAGGED = 2;
+const HIDDEN = 0;
+const FLAGGED = 1;
+const EXPOSED = 2;
 const DETONATED = 3;
 const MISTAKEN = 4;
 
