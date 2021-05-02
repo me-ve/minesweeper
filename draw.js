@@ -66,7 +66,7 @@ function draw(grid) {
         }
     }
     if (gameEnded) {
-        let message = isWon ? "You won." : "Game over.";
+        let message = gameWon ? "You won." : "Game over.";
         ctx.fillStyle = "#000000";
         ctx.font = "48px Helvetica"
         ctx.fillText(message, 24, 96);

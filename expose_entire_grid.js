@@ -3,7 +3,12 @@ function exposeEntireGrid(grid) {
         for (let j = 0; j < grid[0].length; j++) {
             if (grid[i][j].status == FLAGGED && !grid[i][j].isMined)
                 grid[i][j].status = MISTAKEN;
-            if (grid[i][j].status == HIDDEN) grid[i][j].status = EXPOSED;
+            if (grid[i][j].status == HIDDEN) {
+                if (grid[i][j].isMined && gameWon) {
+                    grid[i][j].status = MINED;
+                }
+                grid[i][j].status = EXPOSED;
+            }
         }
     }
 }

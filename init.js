@@ -3,7 +3,7 @@ function init() {
     ctx = canvas.getContext("2d");
     width = canvas.width;
     height = canvas.height;
-    mode = "hard";
+    mode = "easy";
     settings = config(mode);
     colors = [
         "#FFFFFF",
@@ -22,8 +22,9 @@ function init() {
     gridEndY = GRID_Y_CENTER + (settings.fieldsVertical * FIELD_HEIGHT) / 2;
     gameRunning = false;
     gameEnded = false;
-    isWon = false;
+    gameWon = false;
     let grid;
+    let safeFieldsLeft = settings.fieldsVertical * settings.fieldsHorizontal - settings.mines;
     canvas.onclick = function(e) {
         let x = e.clientX - canvas.offsetLeft;
         let y = e.clientY - canvas.offsetTop;
@@ -32,6 +33,7 @@ function init() {
             let yIndex = (y - gridOffsetY) / FIELD_HEIGHT | 0;
             if (!gameRunning) {
                 grid = gen_grid(settings, [yIndex, xIndex]);
+                safeFieldsLeft = exposeNeighboursIfEmpty(grid, safeFieldsLeft, xIndex, yIndex) - 1;
                 gameRunning = true;
                 draw(grid);
                 time = { start: Date.now() };
@@ -43,9 +45,15 @@ function init() {
                         gameEnded = true;
                         exposeEntireGrid(grid);
                     } else {
-                        grid[yIndex][xIndex].status = EXPOSED;
+                        safeFieldsLeft = exposeNeighboursIfEmpty(grid, safeFieldsLeft, xIndex, yIndex);
                     }
                 }
+            }
+            console.log(safeFieldsLeft)
+            if (safeFieldsLeft == 0 && !gameEnded) {
+                gameEnded = true;
+                gameWon = true;
+                exposeEntireGrid(grid);
             }
         }
     }
@@ -56,7 +64,14 @@ function init() {
             let xIndex = (x - gridOffsetX) / FIELD_WIDTH | 0;
             let yIndex = (y - gridOffsetY) / FIELD_HEIGHT | 0;
             if (gameRunning) {
-                grid[yIndex][xIndex].status ^= FLAGGED; //switches between hidden(0) and flagged(1)
+                switch (grid[yIndex][xIndex].status) {
+                    case HIDDEN:
+                        grid[yIndex][xIndex].status = FLAGGED;
+                        break;
+                    case FLAGGED:
+                        grid[yIndex][xIndex].status = HIDDEN;
+                        break;
+                }
             }
         }
         return false;
