@@ -1,0 +1,31 @@
+body {
+    background-color: #62708a;
+    color: snow;
+    font-family: 'Helvetica';
+}
+
+table {
+    width: 100%;
+}
+
+#logo {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 6em;
+    margin: auto;
+}
+
+#toolbar {
+    float: left;
+    width: 32px;
+    height: 640px;
+    border: 1px solid snow;
+}
+
+#canvasDiv {
+    border: 1px solid snow;
+    width: 640px;
+    height: 480px;
+    margin: auto;
+    background-color: snow;
+}
