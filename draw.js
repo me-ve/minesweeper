@@ -74,11 +74,15 @@ function draw(grid) {
     if (typeof time != "undefined") {
         ctx.fillStyle = "#000000";
         ctx.font = "48px Helvetica"
-        if (!gameEnded)
+        if (!gameEnded) {
             time.now = Date.now();
-        let ms = time.now - time.start;
-        let timeStr = ms / 1000 | 0;
-        ctx.fillText(timeStr, 24, 48);
+            let ms = time.now - time.start;
+            let timeStr = ms / 1000 | 0;
+            ctx.fillText(timeStr, 24, 48);
+        } else {
+            let ms = time.now - time.start;
+            ctx.fillText(ms / 1000, 24, 48);
+        }
     }
     if (typeof grid != "undefined")
         window.requestAnimationFrame(draw.bind(draw, grid));

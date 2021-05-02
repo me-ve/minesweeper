@@ -24,6 +24,7 @@ function init() {
     gameEnded = false;
     gameWon = false;
     let grid;
+    let flagsLeft;
     let safeFieldsLeft = settings.fieldsVertical * settings.fieldsHorizontal - settings.mines;
     canvas.onclick = function(e) {
         let x = e.clientX - canvas.offsetLeft;

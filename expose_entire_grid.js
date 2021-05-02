@@ -5,9 +5,10 @@ function exposeEntireGrid(grid) {
                 grid[i][j].status = MISTAKEN;
             if (grid[i][j].status == HIDDEN) {
                 if (grid[i][j].isMined && gameWon) {
-                    grid[i][j].status = MINED;
+                    grid[i][j].status = FLAGGED;
+                } else {
+                    grid[i][j].status = EXPOSED;
                 }
-                grid[i][j].status = EXPOSED;
             }
         }
     }
