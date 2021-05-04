@@ -89,7 +89,7 @@ function draw(grid) {
             ctx.fillText("Time: " + timeStr, 24, 48);
         } else {
             let ms = time.now - time.start;
-            let timeStr = ms / 1000 | 0;
+            let timeStr = ms / 1000
             ctx.fillText("Time: " + timeStr, 24, 48);
         }
     }
